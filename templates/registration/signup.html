@@ -3,26 +3,48 @@
 {% block title %}Signup{% endblock %}
 
 {% block content %}
-<section class="bg-light py-5">
-    <div class="container">
-        <div class="row py-5">
+<section class="bg-light">
+    <div class="container py-5">
+        <h1 class="display-4">Welcome to Our Bank</h1>
+        <p class="lead">Create an account and enjoy the best Banking system</p>
+    </div>
+    <div class="container py-5">
+        <div class="row">
             <div class="col-md-6">
                 <h1>Signup</h1>
                 <form method="post">
                     {% csrf_token %}
                     <div>
-                        <div>{{ form.first_name.label }}:</div>
-                        <div>{{ form.first_name }}</div>
-                        <div>{{ form.last_name.label }}:</div>
-                        <div>{{ form.last_name }}</div>
-                        <div>{{ form.email.label }}:</div>
-                        <div>{{ form.email }}</div>
-                        <div>{{ form.username.label }}:</div>
-                        <div>{{ form.username }}</div>
-                        <div>{{ form.password1.label }}:</div>
-                        <div>{{ form.password1 }}</div>
-                        <div>{{ form.password2.label }}:</div>
-                        <div>{{ form.password2 }}</div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div><label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}:</label></div>
+                                <div>{{ form.first_name }}</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div><label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}:</label></div>
+                                <div>{{ form.last_name }}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div><label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label></div>
+                                <div>{{ form.email }}</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div><label for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label></div>
+                                <div>{{ form.username }}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div><label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}:</label></div>
+                                <div>{{ form.password1 }}</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div><label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}:</label></div>
+                                <div>{{ form.password2 }}</div>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-info my-3">Signup</button>
                 </form>
