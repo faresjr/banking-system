@@ -1,0 +1,88 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<section class="py-5 text-center bg-light">
+    <div class="container-fluid">
+        {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="display-4">Dashboard</h1>
+                <p class="lead">Welcome to your dashboard, {{ user.username }}!</p>
+                <p>Your current balance is: ${{ balance }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="display-4">Welcome to Our Bank</h1>
+                <p class="lead">Please log in to access your account.</p>
+                <a href="{% url 'login' %}" class="btn btn-info">Login</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% if user.is_authenticated %}
+<section class="bg-light text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Recent Transactions</h2>
+                {% if transactions %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.created_at }}</td>
+                                <td>${{ transaction.amount }}</td>
+                                <td>{{ transaction.transaction_type }}</td>
+                                <td>{{ transaction.description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if transactions.has_other_pages %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if transactions.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ transactions.previous_page_number }}">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% for page in transactions.paginator.page_range %}
+                        {% if page == transactions.number %}
+                        <li class="page-item active"><a class="page-link">{{ page }}</a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if transactions.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ transactions.next_page_number }}">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+                {% else %}
+                <p>No transactions found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
