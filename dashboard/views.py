@@ -13,7 +13,7 @@ def dashboard(request):
         try:
             account = BankAccount.objects.get(user=request.user)
             transactions = Transaction.objects.filter(account=account).order_by('created_at')
-            paginator = Paginator(transactions, 8)  # Show 10 transactions per page
+            paginator = Paginator(transactions, 10)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
             context = {'account': account, 'balance': account.balance, 'transactions': page_obj}
